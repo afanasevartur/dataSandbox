@@ -1,4 +1,4 @@
-# [Project Name]: Semantic Synthetic Data Engine
+# dataSandbox: Semantic Synthetic Data Engine
 
 Welcome to dataSandbox, an advanced open-source framework for generating highly realistic, rule-based synthetic data. 
 
