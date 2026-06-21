@@ -1,6 +1,6 @@
 # [Project Name]: Semantic Synthetic Data Engine
 
-Welcome to **[Project Name]**, an advanced open-source framework for generating highly realistic, rule-based synthetic data. 
+Welcome to dataSandbox, an advanced open-source framework for generating highly realistic, rule-based synthetic data. 
 
 Unlike traditional mock-data generators that rely on pure statistical randomness, or heavy Machine Learning models that require real data to train, this project relies on **semantic logic, mathematical dependencies, and domain expertise**. It acts as an "engine of common sense" to ensure your synthetic datasets maintain real-world structural integrity.
 
@@ -61,12 +61,3 @@ The complex math of Stage 2 is hidden behind human-readable API classes. A user 
 ## ⚠️ 4. Work in Progress (WIP)
 
 **Please note: This project is currently in active development and is not yet ready for production use.**
-
-We are currently building out the Stage 3 semantic libraries and finalizing the topological sorting algorithms. The core API is subject to breaking changes. 
-
-**What's next on the roadmap?**
-* Expanding the library of pre-built semantic columns (Finance, Healthcare, HR domains).
-* Implementing anomaly thresholds (balancing safety with outlier generation).
-* Building the CLI and easy-to-use API wrappers.
-
-We welcome early feedback, architectural discussions, and contributions! Feel free to open an issue to propose new rules or mathematical classes.
