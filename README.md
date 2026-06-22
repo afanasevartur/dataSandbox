@@ -48,3 +48,19 @@ Here are the three mathematical categories you can apply to your columns, what t
 **What it means:** This is a continuous correlation generator. It creates numerical values by applying mathematical weights to one or more parent columns, adding a starting baseline, and injecting random standard deviation to make the data look organic.
 **When to use it:** Use this when numerical values naturally scale based on other numbers in your dataset. For instance, a salary typically increases as years of experience increase, or a monthly spend increases based on a combination of salary and credit score.
 **How to apply it:** You define exactly which parent columns influence the result and by what multiplier. Then, you provide a base bias (the starting value before any additions) and define the noise level to ensure the resulting correlation isn't perfectly artificial.
+
+### D. How It Works: Mathematical & Structural Justification
+The engine operates on a strict 3-Stage Architecture, abstracting low-level math into high-level semantic behavior.
+Stage 1: The Core Generator
+At the base level, the engine acts as an optimized wrapper around NumPy's PRNG, managing statistical distributions (Uniform, Normal, Exponential) and categorical selections.
+Stage 2: The Dependency Engine (Directed Acyclic Graph)
+This is the core innovation. We represent the relationships between columns as a Topological Sort on a Directed Acyclic Graph (DAG). A node (column) cannot be evaluated until all its parent nodes are resolved.
+We apply specific mathematical classes to nodes:
+Independent Nodes: Sampled directly from baseline distributions.
+Conditional Probability Matrices: For categorical transitions. If node X is evaluated as xi, the probability distribution of child node Y shifts: P(Y=yj∣X=xi)=pij
+Linear Combinations with Noise: For continuous variables, relationships are calculated using weighted parent values, biases, and injected Gaussian noise to simulate real-world variance: Y=b+∑k=1n(wkXk)+ϵ Where wk is the weight of parent Xk, b is the baseline shift, and ϵ∼N(0,σ2) is the random noise factor.
+
+### E. Getting Started
+```bash
+pip install dataSandbox==0.1.0
+```

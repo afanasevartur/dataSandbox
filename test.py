@@ -1,5 +1,5 @@
-from src.dataSandbox.generation_functions import Stage1_CoreGenerator, Stage2_MathEngine
-from src.dataSandbox.generation_functions import Independent, Linear, Conditional
+from dataSandbox.generation_functions import Stage1_CoreGenerator, Stage2_MathEngine
+from dataSandbox.generation_functions import Independent, Linear, Conditional
 
 if __name__ == "__main__":
     
