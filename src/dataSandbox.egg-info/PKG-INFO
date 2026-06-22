@@ -1,3 +1,14 @@
+Metadata-Version: 2.4
+Name: dataSandbox
+Version: 0.1.0
+Summary: A user-friendly synthetic data generator with automatic topological sorting
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: pandas>=1.3.0
+
 # DataSandbox: Synthetic Data Generator
 
 A lightweight, rule-based engine for generating realistic synthetic datasets. It allows you to define complex relationships between variables using a straightforward mathematical schema, ensuring your generated data maintains logical consistency and statistical correlations.
