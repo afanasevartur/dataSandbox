@@ -64,3 +64,78 @@ Linear Combinations with Noise: For continuous variables, relationships are cal
 ```bash
 pip install dataSandbox==0.1.0
 ```
+
+### F. Tutorial
+
+1. Independent Variables
+The Independent rule is utilized for base columns that lack dependencies. It invokes standard distributions from the core generator. Supported methods include integers, floats, normal, and choices
+
+```Python
+from dataSandbox.generation_functions import Independent
+
+# Generates integer values representing age
+age_rule = Independent('integers', low=18, high=66)
+
+# Generates categorical values with specified probabilities
+gender_rule = Independent('choices', elements=['M', 'F'], p=[0.5, 0.5])
+```
+
+2. Conditional Variables
+The Conditional rule maps distinct Independent generation methods based on the discrete values of a single parent column. This is designed for hierarchical categorical logic.
+
+```Python
+from dataSandbox.generation_functions import Independent, Conditional
+
+# Maps specific generation distributions based on the 'City_Tier' parent column
+education_rule = Conditional(
+    parent='City_Tier', 
+    condition_map={
+        'Tier1': Independent('choices', elements=['HighSchool', 'BSc', 'MSc'], p=[0.2, 0.5, 0.3]),
+        'Tier2': Independent('choices', elements=['HighSchool', 'BSc', 'MSc'], p=[0.5, 0.4, 0.1]),
+        'Tier3': Independent('choices', elements=['HighSchool', 'BSc', 'MSc'], p=[0.8, 0.15, 0.05])
+    }
+)
+```
+
+3. Linear Variables
+The Linear rule computes continuous numerical arrays based on a weighted sum of parent columns (parents_weights). It applies a constant scalar bias and introduces Gaussian noise determined by noise_std.
+
+```Python
+from dataSandbox.generation_functions import Linear
+
+# Computes target values using a linear combination of two parent variables
+salary_rule = Linear(
+    parents_weights={'Experience_Years': 3000.0, 'Base_Economy': 20000.0}, 
+    bias=10000.0, 
+    noise_std=5000.0
+)
+```
+
+Execution Pipeline
+The Stage2_MathEngine automatically performs a topological sort on the provided schema dictionary to determine the correct execution order. It guarantees that dependent columns are generated only after their respective parent columns are fully computed. The output is compiled into a pandas.DataFrame.
+
+```Python
+import pandas as pd
+from dataSandbox.generation_functions import Stage1_CoreGenerator, Stage2_MathEngine
+from dataSandbox.generation_functions import Independent, Linear
+
+# 1. Define the generation schema
+generation_schema = {
+    'Age': Independent('integers', low=18, high=66),
+    'Experience_Years': Linear({'Age': 0.8}, bias=-14.0, noise_std=2.0)
+}
+
+# 2. Initialize the core generator with a seed for reproducibility
+core = Stage1_CoreGenerator(seed=42)
+
+# 3. Instantiate the execution engine
+math_engine = Stage2_MathEngine(core)
+
+# 4. Build the DAG and validate parent-child mappings
+math_engine.build_schema(generation_schema)
+
+# 5. Execute generation and output the DataFrame
+df = math_engine.generate_dataframe(size=1000)
+
+print(df.head())
+```
